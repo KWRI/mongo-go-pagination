@@ -4,22 +4,22 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	paginate "github.com/gobeam/mongo-go-pagination"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/http"
 	"strconv"
+
+	paginate "github.com/gobeam/mongo-go-pagination"
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 // Product struct
 type Product struct {
-	Id       primitive.ObjectID `json:"_id,omitempty" bson:"_id"`
-	Name     string             `json:"name,omitempty" bson:"name"`
-	Quantity float64            `json:"quantity,omitempty" bson:"quantity"`
-	Price    float64            `json:"price,omitempty" bson:"price"`
+	Id       bson.ObjectID `json:"_id,omitempty" bson:"_id"`
+	Name     string        `json:"name,omitempty" bson:"name"`
+	Quantity float64       `json:"quantity,omitempty" bson:"quantity"`
+	Price    float64       `json:"price,omitempty" bson:"price"`
 }
 
 func insertExamples(db *mongo.Database) (insertedIds []interface{}, err error) {
@@ -44,7 +44,7 @@ var dbConnection *mongo.Database
 func main() {
 	// Establishing mongo db connection
 	ctx := context.Background()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://127.0.0.1:27017/"))
+	client, err := mongo.Connect(options.Client().ApplyURI("mongodb://127.0.0.1:27017/"))
 	if err != nil {
 		panic(err)
 	}
