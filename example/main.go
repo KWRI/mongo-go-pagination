@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
-	paginate "github.com/gobeam/mongo-go-pagination"
+	paginate "github.com/kwri/mongo-go-pagination"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
