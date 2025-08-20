@@ -2,10 +2,11 @@ package mongopagination
 
 import (
 	"context"
+
 	"github.com/pkg/errors"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 // Error constants
@@ -190,10 +191,13 @@ LOOP:
 	},
 	}
 	aggregationFilter = append(aggregationFilter, facet)
-	diskUse := true
-	opt := &options.AggregateOptions{
-		AllowDiskUse: &diskUse,
-	}
+	// diskUse := true
+	// opt := &options.AggregateOptions{
+	// 	AllowDiskUse: &diskUse,
+	// }
+
+	opt := options.Aggregate().SetAllowDiskUse(true)
+
 	ctx := paging.getContext()
 	cursor, err := paging.Collection.Aggregate(ctx, aggregationFilter, opt)
 	if err != nil {
@@ -240,10 +244,13 @@ func (paging *pagingQuery) Find() (paginatedData *PaginatedData, err error) {
 
 	// set options for sorting and skipping
 	skip := getSkip(paging.PageCount, paging.LimitCount)
-	opt := &options.FindOptions{
-		Skip:  &skip,
-		Limit: &paging.LimitCount,
-	}
+	// opt := &options.FindOptions{
+	// 	Skip:  &skip,
+	// 	Limit: &paging.LimitCount,
+	// }
+
+	opt := options.Find().SetSkip(skip).SetLimit(paging.LimitCount)
+
 	if paging.Project != nil {
 		opt.SetProjection(paging.Project)
 	}

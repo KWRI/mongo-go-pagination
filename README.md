@@ -34,14 +34,13 @@ import (
 	"fmt"
 	. "github.com/gobeam/mongo-go-pagination"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
 )
 
 type Product struct {
-	Id       primitive.ObjectID `json:"_id" bson:"_id"`
+	Id       bson.ObjectID `json:"_id" bson:"_id"`
 	Name     string             `json:"name" bson:"name"`
 	Quantity float64            `json:"qty" bson:"qty"`
 	Price    float64            `json:"price" bson:"price"`

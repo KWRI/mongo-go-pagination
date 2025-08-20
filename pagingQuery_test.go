@@ -3,14 +3,15 @@ package mongopagination
 import (
 	"context"
 	"fmt"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"strings"
 	"sync"
 	"testing"
 	"time"
+
+	"go.mongodb.org/mongo-driver/v2/bson"
+	"go.mongodb.org/mongo-driver/v2/mongo"
+	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 type TodoTest struct {
@@ -247,14 +248,16 @@ func NewConnection() (a *mongo.Database, b *mongo.Client) {
 
 func connect() (a *mongo.Database, b *mongo.Client) {
 	var err error
-	session, err := mongo.NewClient(options.Client().ApplyURI(DatabaseHost))
+	// session, err := mongo.NewClient(options.Client().ApplyURI(DatabaseHost))
+	session, err := mongo.Connect(options.Client().ApplyURI(DatabaseHost))
+
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = session.Connect(context.TODO())
-	if err != nil {
-		log.Fatal(err)
-	}
+	// err = session.Connect(context.TODO())
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	var db = session.Database(DatabaseName)
 	return db, session
